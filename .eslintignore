@@ -1,0 +1,14 @@
+# Node module
+node_modules/
+
+# Build folder
+build/
+
+# Environment file
+.env
+
+# Config file
+globalConfig.json
+
+# Also, ignore js file
+*.js

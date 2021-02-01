@@ -1,0 +1,288 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Express API",
+    "description": "Express API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "description": "Localhost",
+      "url": "http://localhost:8888/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "User Operations"
+    },
+    {
+      "name": "merchant",
+      "description": "Merchant information endpoints"
+    }
+  ],
+  "paths": {
+    "/merchant": {
+      "get": {
+        "tags": [
+          "merchant"
+        ],
+        "summary": "Get all merchants",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Merchant"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "merchant"
+        ],
+        "summary": "Create merchant",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "url"
+                  },
+                  "contact": {
+                    "type": "string",
+                    "format": "phone"
+                  },
+                  "userAcc": {
+                    "type": "string",
+                    "format": "mongo-objectid(User)"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/merchant/{merchantId}": {
+      "get": {
+        "tags": [
+          "merchant"
+        ],
+        "summary": "Get individual merchant",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "mongo-objectid(Merchant)"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Merchant"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "merchant"
+        ],
+        "summary": "Update merchant",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "mongo-objectid(Merchant)"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "url"
+                  },
+                  "contact": {
+                    "type": "string",
+                    "format": "phone"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Updated"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "merchant"
+        ],
+        "summary": "Delete individual merchant",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "mongo-objectid(Merchant)"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sucessfully deactivated"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Merchant": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "mongo-objectid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string",
+            "format": "url"
+          },
+          "campaigns": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "mongo-objectid(Campaign)"
+            }
+          },
+          "contact": {
+            "type": "string",
+            "format": "phone"
+          },
+          "shops": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "mongo-objectid(Shop)"
+            }
+          },
+          "userAcc": {
+            "type": "string",
+            "format": "mongo-objectid(User)"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "auth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
