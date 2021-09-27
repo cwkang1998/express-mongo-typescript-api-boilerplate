@@ -1,0 +1,10 @@
+{
+    "ignore": [
+        "node_modules",
+        ".vscode"
+    ],
+    "verbose": true,
+    "env": {
+        "NODE_ENV": "dev"
+    }
+}
