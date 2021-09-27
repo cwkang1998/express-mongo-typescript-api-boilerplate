@@ -1,0 +1,11 @@
+# Node module
+node_modules/
+
+# Build folder
+build/
+
+# Environment file
+.env
+
+# Also, ignore js file
+*.js

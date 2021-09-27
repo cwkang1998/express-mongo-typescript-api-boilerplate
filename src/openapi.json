@@ -1,0 +1,81 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Express API",
+    "description": "Express API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "description": "Localhost",
+      "url": "http://localhost:8888/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "task",
+      "description": "Task endpoints"
+    }
+  ],
+  "paths": {},
+  "components": {
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "mongo-objectid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string",
+            "format": "url"
+          },
+          "campaigns": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "mongo-objectid(Campaign)"
+            }
+          },
+          "contact": {
+            "type": "string",
+            "format": "phone"
+          },
+          "shops": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "mongo-objectid(Shop)"
+            }
+          },
+          "userAcc": {
+            "type": "string",
+            "format": "mongo-objectid(User)"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "auth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
