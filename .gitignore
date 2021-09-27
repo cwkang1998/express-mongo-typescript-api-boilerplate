@@ -1,3 +1,12 @@
+# Yarn 2
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
 # Node module
 node_modules/
 
@@ -6,6 +15,3 @@ build/
 
 # Environment file
 .env
-
-# Config file
-globalConfig.json
