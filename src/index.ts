@@ -13,10 +13,7 @@ const DB_URL = process.env.DB_URL || '';
 let server: Server;
 // Initialize Database then server
 mongoose
-  .connect(DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(DB_URL)
   .then(() => {
     console.log('Connected to MongoDB.');
     server = app.listen(PORT, () => {
