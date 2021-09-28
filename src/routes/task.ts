@@ -31,13 +31,17 @@ router.get('/:taskId', async (req: Request, res: Response) => {
     res.status(HttpStatus.HTTP_200_OK).json(task);
   } catch (error) {
     console.error(error);
-    res.status(HttpStatus.HTTP_404_NOT_FOUND).json({ error: 'No task with the given id.' });
+    res
+      .status(HttpStatus.HTTP_404_NOT_FOUND)
+      .json({ error: 'No task with the given id.' });
   }
 });
 
 router.put('/:taskId', async (req: Request, res: Response) => {
   if (!req.body) {
-    return res.status(HttpStatus.HTTP_400_BAD_REQUEST).json({ error: 'No field given' });
+    return res
+      .status(HttpStatus.HTTP_400_BAD_REQUEST)
+      .json({ error: 'No field given' });
   }
   try {
     const task = await Task.findByIdAndUpdate(req.params.taskId, req.body);
@@ -46,9 +50,13 @@ router.put('/:taskId', async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(HttpStatus.HTTP_400_BAD_REQUEST).json({ error: 'Failed to update model' });
+    return res
+      .status(HttpStatus.HTTP_400_BAD_REQUEST)
+      .json({ error: 'Failed to update model' });
   }
-  return res.status(HttpStatus.HTTP_404_NOT_FOUND).json({ error: 'Invalid task id' });
+  return res
+    .status(HttpStatus.HTTP_404_NOT_FOUND)
+    .json({ error: 'Invalid task id' });
 });
 
 router.delete('/:taskId', async (req: Request, res: Response) => {
@@ -57,7 +65,9 @@ router.delete('/:taskId', async (req: Request, res: Response) => {
     return res.status(HttpStatus.HTTP_204_NO_CONTENT).send();
   } catch (error) {
     console.error(error);
-    return res.status(HttpStatus.HTTP_404_NOT_FOUND).json({ error: 'Invalid task id' });
+    return res
+      .status(HttpStatus.HTTP_404_NOT_FOUND)
+      .json({ error: 'Invalid task id' });
   }
 });
 

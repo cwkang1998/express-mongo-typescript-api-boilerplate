@@ -24,7 +24,7 @@ const schema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default mongoose.model<TaskDocument>('Task', schema);

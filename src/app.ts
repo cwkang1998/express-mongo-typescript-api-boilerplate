@@ -1,6 +1,4 @@
-import express, {
-  Application, Router, Request, Response,
-} from 'express';
+import express, { Application, Router, Request, Response } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
