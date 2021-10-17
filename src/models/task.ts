@@ -1,13 +1,12 @@
 import mongoose from 'mongoose';
 
-export interface BaseTaskDocument {
+export interface Task {
   name: string;
   description: string;
   done: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
-export interface TaskDocument extends BaseTaskDocument, mongoose.Document {}
 
 const schema = new mongoose.Schema(
   {
@@ -27,4 +26,4 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<TaskDocument>('Task', schema);
+export const TaskModel = mongoose.model<Task>('Task', schema);
