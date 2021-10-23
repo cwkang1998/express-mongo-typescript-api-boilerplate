@@ -1,29 +1,44 @@
-import express, { Application, Router, Request, Response } from 'express';
+import express, { Application, Router } from 'express';
+import { Mongoose } from 'mongoose';
 import cors from 'cors';
 import morgan from 'morgan';
+import AdminBro from 'admin-bro';
+import AdminBroMongooseAdapter from '@admin-bro/mongoose';
+import AdminBroExpress from '@admin-bro/express';
 import swaggerUi from 'swagger-ui-express';
 import initTaskModule from './task';
 import initUserModule from './user';
 import swaggerDoc from './openapi.json';
 
-const app: Application = express();
-const main: Router = Router();
+const createApp = (mongoose: Mongoose) => {
+  const app: Application = express();
+  const main: Router = Router();
 
-app.use(cors());
-app.use(express.json());
-app.use(morgan('combined'));
+  AdminBro.registerAdapter(AdminBroMongooseAdapter);
+  const adminBro = new AdminBro({
+    databases: [mongoose],
+    rootPath: '/admin',
+  });
+  const adminPanelRouter = AdminBroExpress.buildRouter(adminBro);
 
-const taskRoutes = initTaskModule();
-const userRoutes = initUserModule();
+  app.use(cors());
+  app.use(express.json());
+  app.use(morgan('combined'));
 
-main.use('/task', taskRoutes);
-main.use('/user', userRoutes);
+  const taskRoutes = initTaskModule();
+  const userRoutes = initUserModule();
 
-// Documentation
-main.use('/docs', swaggerUi.serve);
-main.get('/docs', swaggerUi.setup(swaggerDoc));
+  main.use(adminBro.options.rootPath, adminPanelRouter);
+  main.use('/task', taskRoutes);
+  main.use('/user', userRoutes);
 
-// Api Version Main Route
-app.use('/', main);
+  // Documentation
+  main.use('/docs', swaggerUi.serve);
+  main.get('/docs', swaggerUi.setup(swaggerDoc));
 
-export default app;
+  // Api Version Main Route
+  app.use('/', main);
+  return app;
+};
+
+export default createApp;

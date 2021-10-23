@@ -1,7 +1,7 @@
 import { Server } from 'http';
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
 import dotenv from 'dotenv';
-import app from './app';
+import createApp from './app';
 
 if (process.env.NODE_ENV === 'dev') {
   dotenv.config();
@@ -14,8 +14,9 @@ let server: Server;
 // Initialize Database then server
 mongoose
   .connect(DB_URL)
-  .then(() => {
+  .then((mongooseInstance: Mongoose) => {
     console.log('Connected to MongoDB.');
+    const app = createApp(mongooseInstance);
     server = app.listen(PORT, () => {
       console.log(`Server running on ${PORT}.`);
     });
