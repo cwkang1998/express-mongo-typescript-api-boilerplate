@@ -1,9 +1,10 @@
 import { Router } from 'express';
+import { isAuthenticated } from '../middlewares/auth';
 import TaskController from './controller';
 
 const initTaskModule = () => {
   const router: Router = Router();
-
+  router.use(isAuthenticated);
   const controller = new TaskController();
 
   router.get('/', controller.getAll.bind(controller));

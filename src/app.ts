@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import initTaskModule from './task';
+import initUserModule from './user';
 import swaggerDoc from './openapi.json';
 
 const app: Application = express();
@@ -13,8 +14,10 @@ app.use(express.json());
 app.use(morgan('combined'));
 
 const taskRoutes = initTaskModule();
+const userRoutes = initUserModule();
 
 main.use('/task', taskRoutes);
+main.use('/user', userRoutes);
 
 // Documentation
 main.use('/docs', swaggerUi.serve);

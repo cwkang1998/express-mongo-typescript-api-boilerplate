@@ -1,5 +1,5 @@
 {
-  "ignore": ["node_modules", ".vscode"],
+  "ignore": ["node_modules", ".vscode", "data/**.**"],
   "verbose": true,
   "env": {
     "NODE_ENV": "dev"

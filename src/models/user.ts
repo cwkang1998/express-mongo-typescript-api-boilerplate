@@ -5,8 +5,14 @@ export interface User {
   name: string;
   email: string;
   password: string;
+  role?: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
 }
 
 const schema = new mongoose.Schema(
@@ -22,6 +28,11 @@ const schema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    role: {
+      type: String,
+      enum: Object.values(UserRole),
+      default: UserRole.USER,
     },
   },
   { timestamps: true }
